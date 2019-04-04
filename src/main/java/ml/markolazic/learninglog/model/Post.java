@@ -15,12 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 @Entity
-@Table(name = "post")
 @NamedQueries({
         @NamedQuery(name = Post.FIND_ALL, query = "select p from Post p"),
         @NamedQuery(name = Post.REMOVE_BY_ID, query = "delete from Post p where p.id = :id")
@@ -32,21 +30,20 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @JsonbProperty("author")
     private String author;
 
     @JsonbProperty("text")
-    private String text;
+    private String postText;
 
     public Post() {
     }
 
-    public Post(String author, String text) {
+    public Post(String author, String postText) {
         this.author = author;
-        this.text = text;
+        this.postText = postText;
     }
 
     public int getId() {
@@ -65,12 +62,12 @@ public class Post {
         this.author = author;
     }
 
-    public String getText() {
-        return text;
+    public String getPostText() {
+        return postText;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setPostText(String text) {
+        this.postText = text;
     }
 
     @Override
@@ -97,7 +94,7 @@ public class Post {
 
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
                 .add("author", author)
-                .add("text", text);
+                .add("text", postText);
         return objectBuilder.build();
     }
 }

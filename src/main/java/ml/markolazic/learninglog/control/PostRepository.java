@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.Transactional;
 
 @Stateless
 public class PostRepository extends AbstractRepository<Post>{
@@ -32,9 +33,10 @@ public class PostRepository extends AbstractRepository<Post>{
         super(entityClass);
     }
 
-    public Post removeById(String id) {
+    @Transactional
+    public void removeById(Integer id) {
         final Query namedQuery = entityManager.createNamedQuery(Post.REMOVE_BY_ID);
         namedQuery.setParameter("id", id);
-        return (Post) namedQuery.getSingleResult();
+        namedQuery.executeUpdate();
     }
 }

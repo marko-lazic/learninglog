@@ -14,20 +14,6 @@ public class PostService {
     @Inject
     private PostRepository postRepository;
 
-    private List<Post> posts;
-
-    @PostConstruct
-    private void init() {
-        posts = new ArrayList<>();
-
-        postRepository.create(new Post("Makro", "hello world."));
-        postRepository.create(new Post("Makro", "Tea is getting ready!"));
-        postRepository.create(new Post("Makro", "Microservices devoxx converence"));
-        postRepository.create(new Post("Makro", "Works like heaven on java 11"));
-        postRepository.create(new Post("Makro", "Adam Bien was here."));
-
-    }
-
     public List<Post> findAll() {
         return postRepository.findAll();
     }
@@ -44,7 +30,7 @@ public class PostService {
         postRepository.create(post);
     }
 
-    public Post delete(String id) {
-        return postRepository.removeById(id);
+    public void delete(String id) {
+        postRepository.removeById(Integer.valueOf(id));
     }
 }
